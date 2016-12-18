@@ -4,11 +4,20 @@
 #include <QGraphicsPixmapItem>
 #include <QGraphicsPolygonItem>
 #include <QGraphicsItem>
+#include <QColor>
+#include <String>
+#include "type.h"
 
-class Hexagon: public QGraphicsPixmapItem{
+using namespace std;
+
+class Hexagon: public QGraphicsPolygonItem{
 public:
-    Hexagon(QGraphicsItem * parent=0);
+    Hexagon(int sideSize, float x, float y, int i, int j, enum Type type, QGraphicsItem * parent=0);
+    float getX();
+    float getY();
 private:
+    float centerX, centerY;
+    int s,iIndex,jIndex;
     QGraphicsPolygonItem * tile;
 };
 

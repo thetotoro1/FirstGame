@@ -18,6 +18,7 @@ SOURCES += main.cpp \
 
 HEADERS  += \
     hexagon.h \
-    game.h
+    game.h \
+    type.h
 
 FORMS    +=
