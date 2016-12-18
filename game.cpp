@@ -5,6 +5,7 @@
 #include "type.h"
 #include <math.h>
 #include <QMouseEvent>
+#include <QDebug>
 
 
 
@@ -12,7 +13,7 @@
 Game::Game()
 {
 
-    int gridI = 4, gridJ = 4, s=50;
+    int gridI = 4, gridJ = 4, s=60;
     float a = sqrt((pow(s, 2))-(pow((s/2),2)));
 
 
@@ -29,29 +30,63 @@ Game::Game()
 
     Hexagon * grid[gridI][gridJ];
 
-    grid[0][0] = new Hexagon(s,100,100,0,0,brick);
-    for (int j=0;j<=gridJ;j++){
+    Type types[] = {brick,brick,brick,ore,ore,ore,sheep,sheep,sheep,sheep,wheat,wheat,wheat,wheat,wood,wood,wood,wood,desert};
 
-        for (int i=0;i<=gridI;i++){
+    shuffleTiles(types);
 
-            if (!(i==0&&j==0) && !(i==4&&j==0) && !(i==4&&j==4) && !(i==0&&j==4) && !(i==4&&j==1) && !(i==4&&j==3)){
-                grid[i][j] = new Hexagon(s,(grid[0][0]->getX() + (j*((3*s)/2))),(grid[0][0]->getY() + ((j%2)*a) + (2*i*a)),i,j,brick);
-                scene->addItem(grid[i][j]);
+
+    int k = 0;
+
+    grid[0][0] = new Hexagon(s,100,100,0,0,desert);
+    for (int j=0;j<=gridJ;j++){         //loop through rows
+
+        for (int i=0;i<=gridI;i++){     //loop through columns
+
+            if (!(i==0&&j==0) && !(i==4&&j==0) && !(i==4&&j==4) && !(i==0&&j==4) && !(i==1&&j==4) && !(i==3&&j==4)){
+                //create the hexagons
+                grid[j][i] = new Hexagon(s,(grid[0][0]->getX() + (i*((3*s)/2))),(grid[0][0]->getY() + ((i%2)*a) + (2*j*a)),j,i,types[k]);
+                scene->addItem(grid[j][i]);
+                qDebug() << "Hexagon at (" << i << "," << j << ") was set as ";
+
+                switch (types[k]) {
+                case brick:
+                qDebug() << "brick";
+                    break;
+                case ore:
+                    qDebug() << "ore";
+                    break;
+                case sheep:
+                    qDebug() << "sheep";
+                    break;
+                case wheat:
+                    qDebug() << "wheat";
+                break;
+                case wood:
+                    qDebug() << "wood";
+                    break;
+                case desert:
+                    qDebug() << "desert";
+                    break;
+                default:
+                    qDebug() << "ERROR!";
+                    break;
+                }
+                k++;
             }
         }
 
     }
 
 
-//    //create hexagon
-//    Hexagon * hex = new Hexagon(s,100,100,0,0,brick);
-//    Hexagon * hex2 = new Hexagon(s,100,200,0,0,sheep);
-
-//    scene->addItem(hex);
-//    scene->addItem(hex2);
 
 
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setFixedSize(800,600);
 }
+
+void Game::shuffleTiles(Type types[])
+{
+
+}
+

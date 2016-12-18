@@ -1,6 +1,5 @@
 #include "hexagon.h"
 #include <math.h>
-#include <QDebug>
 #include <QVector>
 #include <QPointF>
 #include <QPolygonF>
